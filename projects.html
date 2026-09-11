@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Maria Ganeva's software engineering, data, cybersecurity, and web development projects.">
+  <title>Projects Portfolio | Maria Ganeva</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+    :root {
+      --navy: #0b1f33;
+      --navy-soft: #102b43;
+      --teal: #4f7887;
+      --teal-light: #d8e7e9;
+      --sage: #a6b78f;
+      --sage-light: #e6eddc;
+      --cream: #f5f2eb;
+      --white: #ffffff;
+      --text: #183044;
+      --text-soft: #607080;
+      --border: rgba(11, 31, 51, 0.12);
+      --shadow-sm: 0 8px 24px rgba(11, 31, 51, 0.08);
+      --shadow-md: 0 18px 50px rgba(11, 31, 51, 0.12);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 30px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--cream);
+      color: var(--text);
+      font-family: "DM Sans", Arial, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body.drawer-open {
+      overflow: hidden;
+    }
+
+    a, button {
+      font: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: "Space Grotesk", Arial, sans-serif;
+      letter-spacing: -0.035em;
+    }
+
+    /* NAVIGATION */
+    .site-nav {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px clamp(24px, 5vw, 80px);
+    }
+
+    .brand {
+      color: var(--navy);
+      font-family: "Space Grotesk", Arial, sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-link {
+      padding: 10px 16px;
+      color: var(--text-soft);
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--navy);
+      background: rgba(11, 31, 51, 0.06);
+    }
+
+    .nav-link.active {
+      color: var(--navy);
+      background: rgba(79, 120, 135, 0.12);
+    }
+
+    /* PROJECTS PAGE WRAPPER */
+    .projects-page {
+      width: min(1300px, 100%);
+      margin: 0 auto;
+      padding: 10px clamp(24px, 5vw, 80px) 100px;
+      display: flex;
+      flex-direction: column;
+      gap: 60px;
+    }
+
+    .projects-hero {
+      max-width: 700px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(79, 120, 135, 0.12);
+      color: var(--teal);
+      border-radius: 999px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .projects-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      line-height: 1.05;
+      color: var(--navy);
+      margin-bottom: 20px;
+    }
+
+    .projects-hero p {
+      font-size: 1.1rem;
+      color: var(--text-soft);
+      line-height: 1.7;
+    }
+
+    /* PROJECT SHOWCASE DECK */
+    .project-showcase {
+      position: relative;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .project-stage {
+      position: relative;
+      width: 100%;
+      max-width: 620px;
+      height: 440px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: white;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(11, 31, 51, 0.25);
+      transition: transform 0.5s var(--ease), opacity 0.4s ease, filter 0.4s ease, z-index 0.3s ease;
+      user-select: none;
+    }
+
+    .project-card-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      z-index: 1;
+      transition: transform 0.5s ease;
+    }
+
+    .project-card:hover .project-card-bg {
+      transform: scale(1.03);
+    }
+
+    .project-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(11, 31, 51, 0.88), rgba(22, 61, 82, 0.8));
+      z-index: 2;
+    }
+
+    .project-card-inner {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 36px;
+      height: 100%;
+      width: 100%;
+    }
+
+    .project-card-1 .project-card-overlay { background: linear-gradient(135deg, rgba(22, 61, 82, 0.88), rgba(45, 101, 117, 0.8)); }
+    .project-card-2 .project-card-overlay { background: linear-gradient(135deg, rgba(52, 77, 67, 0.88), rgba(99, 123, 104, 0.8)); }
+    .project-card-3 .project-card-overlay { background: linear-gradient(135deg, rgba(39, 56, 79, 0.88), rgba(83, 103, 126, 0.8)); }
+    .project-card-4 .project-card-overlay { background: linear-gradient(135deg, rgba(62, 58, 50, 0.88), rgba(119, 111, 93, 0.8)); }
+
+    .project-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .project-index {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .project-category {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      backdrop-filter: blur(6px);
+    }
+
+    .project-card-content {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .project-card-content h2 {
+      font-size: clamp(1.8rem, 3vw, 2.3rem);
+      margin-bottom: 8px;
+    }
+
+    .project-card-content p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.6;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .project-tags span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .project-details-button {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: white;
+      color: var(--navy);
+      border: 0;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .project-details-button:hover {
+      background: var(--teal-light);
+      transform: translateY(-2px);
+    }
+
+    /* DECK STACKING POSITIONS */
+    .project-card.deck-front {
+      z-index: 10;
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      filter: blur(0);
+      pointer-events: auto;
+    }
+
+    .project-card.deck-second {
+      z-index: 8;
+      transform: translateY(18px) scale(0.96);
+      opacity: 0.6;
+      filter: blur(1px);
+      pointer-events: none;
+    }
+
+    .project-card.deck-third {
+      z-index: 6;
+      transform: translateY(36px) scale(0.92);
+      opacity: 0.3;
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .project-card.deck-back {
+      z-index: 4;
+      transform: translateY(54px) scale(0.88);
+      opacity: 0;
+      filter: blur(3px);
+      pointer-events: none;
+    }
+
+    /* DECK CONTROLS */
+    .project-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      margin-top: 10px;
+    }
+
+    .deck-arrow {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--navy);
+      display: grid;
+      place-items: center;
+      font-size: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .deck-arrow:hover {
+      background: var(--navy);
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .project-progress {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .progress-line {
+      width: 120px;
+      height: 4px;
+      background: rgba(11, 31, 51, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #progressBar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 25%;
+      background: var(--navy);
+      transition: width 0.3s ease;
+    }
+
+    /* FOOTER */
+    .projects-footer {
+      background: var(--navy);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 50px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .projects-footer h2 {
+      color: white;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      margin-top: 6px;
+    }
+
+    .button-primary {
+      background: white;
+      color: var(--navy);
+      padding: 14px 28px;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .button-primary:hover {
+      background: var(--teal-light);
+      transform: translateY(-2px);
+    }
+
+    /* DRAWER MODAL */
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 31, 51, 0.5);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .drawer-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .drawer-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(540px, 90vw);
+      background: white;
+      z-index: 101;
+      padding: 50px;
+      box-shadow: -20px 0 50px rgba(11, 31, 51, 0.15);
+      transform: translateX(100%);
+      transition: transform 0.4s var(--ease);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+
+    .drawer-panel.open {
+      transform: translateX(0);
+    }
+
+    .drawer-close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 0;
+      font-size: 1.5rem;
+      color: var(--navy);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .drawer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .drawer-number {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--teal);
+      line-height: 1;
+    }
+
+    .drawer-content h2 {
+      font-size: clamp(2rem, 3.5vw, 2.6rem);
+      color: var(--navy);
+    }
+
+    .drawer-content p {
+      color: var(--text-soft);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .drawer-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 10px 0;
+    }
+
+    .drawer-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .drawer-label {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--navy);
+    }
+
+    .drawer-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .drawer-tags span {
+      padding: 6px 14px;
+      background: var(--cream);
+      color: var(--navy);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+    }
+
+    .drawer-actions {
+      margin-top: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .projects-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 36px;
+      }
+      .drawer-panel {
+        padding: 30px;
+      }
+      .project-stage {
+        height: 480px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-nav">
+    <a href="index.html" class="brand">Maria Ganeva</a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a class="nav-link" href="about.html">About Me</a>
+      <a class="nav-link active" href="projects.html">My Work</a>
+    </nav>
+  </header>
+
+  <main class="projects-page">
+
+    <!-- Page Header -->
+    <section class="projects-hero">
+      <div class="eyebrow">Selected Work</div>
+      <h1>
+        Things I've<br>
+        built & explored.
+      </h1>
+      <p>
+        A collection of projects that reflect my interests in software engineering, data, cybersecurity, and web development.
+      </p>
+    </section>
+
+    <!-- Project deck showcase -->
+    <section class="project-showcase" aria-label="Project showcase">
+      <div class="project-stage">
+
+        <!-- Project 1: Voting Data Analysis -->
+        <article class="project-card project-card-1 deck-front" data-project="0">
+          <div class="project-card-bg" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80');"></div>
+          <div class="project-card-overlay"></div>
+          <div class="project-card-inner">
+            <div class="project-card-top">
+              <span class="project-index">01</span>
+              <span class="project-category">Data Analysis</span>
+            </div>
+            <div class="project-card-content">
+              <div>
+                <h2>Voting Data Analysis</h2>
+                <p>Processed and analyzed structured voting datasets to extract trends and present actionable data insights.</p>
+              </div>
+              <div class="project-tags">
+                <span>Python</span>
+                <span>Pandas</span>
+                <span>Data</span>
+              </div>
+            </div>
+            <button class="project-details-button" type="button" data-project-button="0">
+              View Details <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Project 2: Mock Application -->
+        <article class="project-card project-card-2 deck-second" data-project="1">
+          <div class="project-card-bg" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80');"></div>
+          <div class="project-card-overlay"></div>
+          <div class="project-card-inner">
+            <div class="project-card-top">
+              <span class="project-index">02</span>
+              <span class="project-category">Software</span>
+            </div>
+            <div class="project-card-content">
+              <div>
+                <h2>Mock Application</h2>
+                <p>Engineered a mock functional application prototype to test user workflows, data structures, and component logic.</p>
+              </div>
+              <div class="project-tags">
+                <span>Python</span>
+                <span>Prototyping</span>
+                <span>Logic</span>
+              </div>
+            </div>
+            <button class="project-details-button" type="button" data-project-button="1">
+              View Details <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Project 3: Personal Historical Web -->
+        <article class="project-card project-card-3 deck-third" data-project="2">
+          <div class="project-card-bg" style="background-image: url('https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&w=1200&q=80');"></div>
+          <div class="project-card-overlay"></div>
+          <div class="project-card-inner">
+            <div class="project-card-top">
+              <span class="project-index">03</span>
+              <span class="project-category">Web Development</span>
+            </div>
+            <div class="project-card-content">
+              <div>
+                <h2>Personal Historical Web</h2>
+                <p>Designed and developed a structured multi-page historical web resource using pure HTML and custom CSS stylesheets.</p>
+              </div>
+              <div class="project-tags">
+                <span>HTML</span>
+                <span>CSS</span>
+                <span>Design</span>
+              </div>
+            </div>
+            <button class="project-details-button" type="button" data-project-button="2">
+              View Details <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </article>
+
+        <!-- Project 4: Personal Incomplete Runner Game -->
+        <article class="project-card project-card-4 deck-back" data-project="3">
+          <div class="project-card-bg" style="background-image: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=1200&q=80');"></div>
+          <div class="project-card-overlay"></div>
+          <div class="project-card-inner">
+            <div class="project-card-top">
+              <span class="project-index">04</span>
+              <span class="project-category">Game Development</span>
+            </div>
+            <div class="project-card-content">
+              <div>
+                <h2>Personal Incomplete Runner Game</h2>
+                <p>An experimental work-in-progress side-scroller runner game exploring game loops, collision detection, and canvas physics.</p>
+              </div>
+              <div class="project-tags">
+                <span>JavaScript</span>
+                <span>HTML5 Canvas</span>
+                <span>WIP</span>
+              </div>
+            </div>
+            <button class="project-details-button" type="button" data-project-button="3">
+              View Details <span aria-hidden="true">↗</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- Deck controls -->
+      <div class="project-controls">
+        <button class="deck-arrow" id="previousProject" type="button" aria-label="Previous project">←</button>
+        <div class="project-progress" aria-label="Project navigation">
+          <span class="progress-current" id="currentProject">01</span>
+          <span class="progress-line">
+            <span id="progressBar"></span>
+          </span>
+          <span class="progress-total">04</span>
+        </div>
+        <button class="deck-arrow" id="nextProject" type="button" aria-label="Next project">→</button>
+      </div>
+    </section>
+
+    <!-- GitHub CTA -->
+    <section class="projects-footer">
+      <div>
+        <div class="eyebrow" style="color: var(--teal-light);">More on GitHub</div>
+        <h2>Keep exploring.</h2>
+      </div>
+      <a class="button button-primary" href="https://github.com/Maria-Ganeva" target="_blank" rel="noopener noreferrer">
+        Visit GitHub ↗
+      </a>
+    </section>
+
+  </main>
+
+  <!-- Project Details Drawer Panel -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <div class="drawer-panel" id="drawerPanel">
+    <button class="drawer-close" id="drawerClose" type="button" aria-label="Close project details">×</button>
+    <div class="drawer-content">
+      <div class="eyebrow" id="drawerCategory">Web Development</div>
+      <div class="drawer-number" id="drawerNumber">01</div>
+      <h2 id="drawerTitle">Personal Portfolio</h2>
+      <p id="drawerDescription">A responsive portfolio website designed to showcase my work, technical interests, and experience.</p>
+      
+      <div class="drawer-divider"></div>
+
+      <div class="drawer-section">
+        <span class="drawer-label">Technologies</span>
+        <div class="drawer-tags" id="drawerTags"></div>
+      </div>
+
+      <div class="drawer-section">
+        <span class="drawer-label">What I explored</span>
+        <p id="drawerExploration">Structured document hierarchy, fluid layouts, custom CSS stylesheets, and responsive mobile-first architecture.</p>
+      </div>
+
+      <div class="drawer-actions">
+        <a class="button button-primary" id="drawerGithub" href="https://github.com/Maria-Ganeva" target="_blank" rel="noopener noreferrer" style="display:inline-block; text-align:center; width:100%;">
+          View on GitHub ↗
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const projectsData = [
+      {
+        number: "01",
+        category: "Data Analysis",
+        title: "Voting Data Analysis",
+        description: "Processed and analyzed structured voting datasets to extract trends and present actionable data insights.",
+        tags: ["Python", "Pandas", "Data"],
+        exploration: "Cleaning demographic election datasets, building data processing pipelines, and visualizing turnout metrics with Matplotlib.",
+        github: "https://github.com/Maria-Ganeva"
+      },
+      {
+        number: "02",
+        category: "Software",
+        title: "Mock Application",
+        description: "Engineered a mock functional application prototype to test user workflows, data structures, and component logic.",
+        tags: ["Python", "Prototyping", "Logic"],
+        exploration: "Designing modular application logic, structured state handlers, and robust testing protocols for reliable user interactions.",
+        github: "https://github.com/Maria-Ganeva"
+      },
+      {
+        number: "03",
+        category: "Web Development",
+        title: "Personal Historical Web",
+        description: "Designed and developed a structured multi-page historical web resource using pure HTML and custom CSS stylesheets.",
+        tags: ["HTML", "CSS", "Design"],
+        exploration: "Creating accessible semantic document hierarchies, responsive CSS grid layouts, and archival content curation.",
+        github: "https://github.com/Maria-Ganeva"
+      },
+      {
+        number: "04",
+        category: "Game Development",
+        title: "Personal Incomplete Runner Game",
+        description: "An experimental work-in-progress side-scroller runner game exploring game loops, collision detection, and canvas physics.",
+        tags: ["JavaScript", "HTML5 Canvas", "WIP"],
+        exploration: "Experimenting with requestAnimationFrame render loops, obstacle spawning mechanics, and keyboard input event listeners.",
+        github: "https://github.com/Maria-Ganeva"
+      }
+    ];
+
+    let currentIndex = 0;
+    const totalProjects = projectsData.length;
+
+    const cards = document.querySelectorAll(".project-card");
+    const nextBtn = document.getElementById("nextProject");
+    const prevBtn = document.getElementById("previousProject");
+    const currentProjSpan = document.getElementById("currentProject");
+    const progressBar = document.getElementById("progressBar");
+
+    const drawerBackdrop = document.getElementById("drawerBackdrop");
+    const drawerPanel = document.getElementById("drawerPanel");
+    const drawerClose = document.getElementById("drawerClose");
+    
+    const drawerCategory = document.getElementById("drawerCategory");
+    const drawerNumber = document.getElementById("drawerNumber");
+    const drawerTitle = document.getElementById("drawerTitle");
+    const drawerDescription = document.getElementById("drawerDescription");
+    const drawerTags = document.getElementById("drawerTags");
+    const drawerExploration = document.getElementById("drawerExploration");
+    const drawerGithub = document.getElementById("drawerGithub");
+
+    function updateDeck() {
+      cards.forEach((card, idx) => {
+        card.className = "project-card";
+        const diff = (idx - currentIndex + totalProjects) % totalProjects;
+        
+        if (diff === 0) {
+          card.classList.add("deck-front");
+        } else if (diff === 1) {
+          card.classList.add("deck-second");
+        } else if (diff === 2) {
+          card.classList.add("deck-third");
+        } else {
+          card.classList.add("deck-back");
+        }
+      });
+
+      currentProjSpan.textContent = String(currentIndex + 1).padStart(2, '0');
+      progressBar.style.width = `${((currentIndex + 1) / totalProjects) * 100}%`;
+    }
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % totalProjects;
+      updateDeck();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + totalProjects) % totalProjects;
+      updateDeck();
+    });
+
+    // Drawer functionality
+    document.querySelectorAll("[data-project-button]").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const projIdx = parseInt(btn.getAttribute("data-project-button"), 10);
+        const proj = projectsData[projIdx];
+
+        drawerCategory.textContent = proj.category;
+        drawerNumber.textContent = proj.number;
+        drawerTitle.textContent = proj.title;
+        drawerDescription.textContent = proj.description;
+        drawerExploration.textContent = proj.exploration;
+        drawerGithub.href = proj.github;
+
+        drawerTags.innerHTML = "";
+        proj.tags.forEach(tag => {
+          const span = document.createElement("span");
+          span.textContent = tag;
+          drawerTags.appendChild(span);
+        });
+
+        drawerBackdrop.classList.add("open");
+        drawerPanel.classList.add("open");
+        document.body.classList.add("drawer-open");
+      });
+    });
+
+    function closeDrawer() {
+      drawerBackdrop.classList.remove("open");
+      drawerPanel.classList.remove("open");
+      document.body.classList.remove("drawer-open");
+    }
+
+    drawerClose.addEventListener("click", closeDrawer);
+    drawerBackdrop.addEventListener("click", closeDrawer);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeDrawer();
+      }
+      if (e.key === "ArrowRight") {
+        currentIndex = (currentIndex + 1) % totalProjects;
+        updateDeck();
+      }
+      if (e.key === "ArrowLeft") {
+        currentIndex = (currentIndex - 1 + totalProjects) % totalProjects;
+        updateDeck();
+      }
+    });
+
+    updateDeck();
+  </script>
+</body>
+</html>

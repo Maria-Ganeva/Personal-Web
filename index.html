@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Maria Ganeva — Software Engineering Co-op portfolio.">
+  <title>Maria Ganeva | Software Engineering Co-op</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+    :root {
+      --navy: #0b1f33;
+      --navy-soft: #102b43;
+      --teal: #4f7887;
+      --teal-light: #d8e7e9;
+      --sage: #a6b78f;
+      --sage-light: #e6eddc;
+      --cream: #f5f2eb;
+      --white: #ffffff;
+      --text: #183044;
+      --text-soft: #607080;
+      --border: rgba(11, 31, 51, 0.12);
+      --shadow-sm: 0 8px 24px rgba(11, 31, 51, 0.08);
+      --shadow-md: 0 18px 50px rgba(11, 31, 51, 0.12);
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 30px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--navy);
+  font-family: "DM Sans", Arial, sans-serif;
+  color: var(--text);
+  cursor: default;
+}
+
+a, button, .peak-btn, .nav-pill, .icon-link {
+  cursor: pointer;
+}
+
+    /* BACKGROUND MOUNTAIN IMAGE CONTAINER */
+    .hero-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0b253a 0%, #5b8393 50%, #d8e5e7 100%);
+      background-image: url('mountain-bg.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* NAVIGATION */
+    .home-nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 50px;
+      z-index: 20;
+    }
+
+    .brand {
+      color: white;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-decoration: none;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .nav-pill {
+      background: rgba(11, 31, 51, 0.7);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-weight: 600;
+      text-decoration: none;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: background 0.2s ease;
+    }
+
+    .nav-pill:hover {
+      background: rgba(11, 31, 51, 0.9);
+    }
+
+    /* INTRODUCTION */
+    .home-intro {
+      position: absolute;
+      top: 120px;
+      left: 50px;
+      z-index: 15;
+      max-width: 500px;
+      color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .home-intro .eyebrow {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .home-intro h1 {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      margin-bottom: 15px;
+    }
+
+    .home-intro p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.9);
+      line-height: 1.6;
+    }
+
+    /* PEAK STYLING */
+    .peak {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform: translate(-50%, -100%);
+      z-index: 10;
+    }
+
+    .peak-about {
+      top: 28%;
+      left: 45%;
+    }
+
+    .peak-work {
+      top: 42%;
+      left: 66%;
+    }
+
+    .peak-marker {
+      width: 10px;
+      height: 10px;
+      background-color: #0b1f33;
+      border: 2px solid white;
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(0,0,0,0.5);
+      margin-bottom: 8px;
+    }
+
+    .peak-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .peak-btn {
+      background-color: #0b1f33;
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255,255,255,0.3);
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .peak-btn:hover {
+      background-color: #163d52;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .peak-icons {
+      display: flex;
+      gap: 8px;
+      background-color: rgba(11, 31, 51, 0.85);
+      padding: 6px 12px;
+      border-radius: 16px;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .icon-link {
+      color: #d8e7e9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, color 0.2s ease;
+      text-decoration: none;
+    }
+
+    .icon-link:hover {
+      transform: scale(1.15);
+      color: #ffffff;
+    }
+
+    @media (max-width: 768px) {
+      .home-nav {
+        padding: 20px;
+      }
+      .home-intro {
+        top: 90px;
+        left: 20px;
+        right: 20px;
+        max-width: none;
+      }
+      .peak-about {
+        top: 32%;
+        left: 40%;
+      }
+      .peak-work {
+        top: 48%;
+        left: 70%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero-container">
+
+    <!-- Navigation -->
+    <header class="site-nav home-nav">
+      <a class="brand" href="index.html">Maria Ganeva</a>
+      <a class="nav-link nav-pill" href="about.html" aria-label="Open About Me page">About Me</a>
+    </header>
+
+    <!-- Introduction -->
+    <section class="home-intro" aria-label="Introduction">
+      <div class="eyebrow" style="color: #dce9c9;">
+        Software Engineering · Cybersecurity · Data
+      </div>
+      <h1>
+        Build. Explore.<br>
+        Keep climbing.
+      </h1>
+      <p>
+        A portfolio of software, data, design, and web projects by Maria Ganeva.
+      </p>
+    </section>
+
+    <!-- ABOUT ME mountain point -->
+    <div class="peak peak-about">
+      <span class="peak-marker" aria-hidden="true"></span>
+      <div class="peak-content">
+        <a class="peak-btn" href="about.html">About Me</a>
+        <div class="peak-icons" aria-label="About links">
+          <a class="icon-link" href="https://www.linkedin.com/in/maria-georgieva-ganeva-2b6814366/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+            </svg>
+          </a>
+          <a class="icon-link" href="resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume" title="Resume">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- MY WORK mountain point -->
+    <div class="peak peak-work">
+      <span class="peak-marker" aria-hidden="true"></span>
+      <div class="peak-content">
+        <a class="peak-btn" href="projects.html">My Work</a>
+        <div class="peak-icons" aria-label="Work links">
+          <a class="icon-link" href="https://github.com/Maria-Ganeva" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+            </svg>
+          </a>
+          <a class="icon-link" href="projects.html" aria-label="Projects" title="Projects">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
